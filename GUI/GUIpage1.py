@@ -5,7 +5,7 @@ import os
 root = Tk()
 root.geometry('1000x700')
 root.title("The Mood Player")
-root.iconbitmap(r'music_player_Gt8_icon.ico')
+root.iconbitmap(r'C:\Users\DESKTOP\Desktop\Mood_Player\GUI\music_player_Gt8_icon.ico')   #update the path according to the system
 
 label= Label(root, text="The Mood Player")
 label.pack(side='top')
@@ -22,4 +22,3 @@ btn1.place(relx=0.48, rely=0.7, anchor="center")
 btn2.place(relx=0.54, rely=0.7, anchor="center")
 
 root.mainloop()
-
