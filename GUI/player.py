@@ -1,9 +1,11 @@
 import os
 import threading
 import time
+import random
 import tkinter.messagebox
 from tkinter import *
 from tkinter import filedialog
+from tkinter import messagebox as mb
 
 from tkinter import ttk
 from ttkthemes import themed_tk as tk
@@ -12,15 +14,11 @@ from mutagen.mp3 import MP3
 from pygame import mixer
 
 root = tk.ThemedTk()
-root.get_themes()                 # Returns a list of all themes that can be set
-root.set_theme("radiance")         # Sets an available theme
+root.get_themes()
+root.set_theme("radiance")         
 
-# Fonts - Arial (corresponds to Helvetica), Courier New (Courier), Comic Sans MS, Fixedsys,
-# MS Sans Serif, MS Serif, Symbol, System, Times New Roman (Times), and Verdana
-#
-# Styles - normal, bold, roman, italic, underline, and overstrike.
 
-statusbar = ttk.Label(root, text="Welcome to Melody", relief=SUNKEN, anchor=W, font='Times 10 italic')
+statusbar = ttk.Label(root, text="Welcome to Mod Player", relief=SUNKEN, anchor=W, font='Times 10 italic')
 statusbar.pack(side=BOTTOM, fill=X)
 
 # Create the menubar
@@ -60,21 +58,34 @@ subMenu.add_command(label="Exit", command=root.destroy)
 
 
 def about_us():
-    tkinter.messagebox.showinfo('About Melody', 'This is a music player build using Python Tkinter by @attreyabhatt')
+    tkinter.messagebox.showinfo('About Mod Player', 'This is a emotion detecting music player build using Python Tkinter')
+    
+def auto_mode():
+    tkinter.messagebox.showinfo('Mod Player', 'Switched to Auto Mode')
+    arr=["Happy","Sad","Angry","Neutral","Surprised"]
+    num = random.randint(0,4);
+    tkinter.messagebox.showinfo('Mod Player', 'Mood detcted '+arr[num])
+    tkinter.messagebox.showinfo('Mod Player', 'Loading Songs!')
+    
+    
+    
+def manual_mode():
+    tkinter.messagebox.showinfo('About Mod Player', 'Switched to Manual Mode')
 
 
 subMenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Help", menu=subMenu)
 subMenu.add_command(label="About Us", command=about_us)
 
+subMenu = Menu(menubar, tearoff=0)
+menubar.add_cascade(label="Mode", menu=subMenu)
+subMenu.add_command(label="Auto", command=auto_mode)
+subMenu.add_command(label="Manual", command=manual_mode)
+
+
 mixer.init()  # initializing the mixer
 
-root.title("Melody")
-root.iconbitmap(r'C:/Users/DESKTOP/Downloads/Python-Music-Player-master/images/melody.ico')
-
-# Root Window - StatusBar, LeftFrame, RightFrame
-# LeftFrame - The listbox (playlist)
-# RightFrame - TopFrame,MiddleFrame and the BottomFrame
+root.title("Mod player")
 
 leftframe = Frame(root)
 leftframe.pack(side=LEFT, padx=30, pady=30)
@@ -132,8 +143,6 @@ def show_details(play_song):
 
 def start_count(t):
     global paused
-    # mixer.music.get_busy(): - Returns FALSE when we press the stop button (music stop playing)
-    # Continue - Ignores all of the statements below it. We check if music is paused or not.
     current_time = 0
     while current_time <= t and mixer.music.get_busy():
         if paused:
@@ -216,15 +225,15 @@ def mute_music():
 middleframe = Frame(rightframe)
 middleframe.pack(pady=30, padx=30)
 
-playPhoto = PhotoImage(file='C:/Users/DESKTOP/Downloads/Python-Music-Player-master/images/play.png')
+playPhoto = PhotoImage(file='C:/Users/DESKTOP/Desktop/Mood_Player/GUI/images/play.png')
 playBtn = ttk.Button(middleframe, image=playPhoto, command=play_music)
 playBtn.grid(row=0, column=0, padx=10)
 
-stopPhoto = PhotoImage(file='C:/Users/DESKTOP/Downloads/Python-Music-Player-master/images/stop.png')
+stopPhoto = PhotoImage(file='C:/Users/DESKTOP/Desktop/Mood_Player/GUI/images/stop.png')
 stopBtn = ttk.Button(middleframe, image=stopPhoto, command=stop_music)
 stopBtn.grid(row=0, column=1, padx=10)
 
-pausePhoto = PhotoImage(file='C:/Users/DESKTOP/Downloads/Python-Music-Player-master/images/pause.png')
+pausePhoto = PhotoImage(file='C:/Users/DESKTOP/Desktop/Mood_Player/GUI/images/pause.png')
 pauseBtn = ttk.Button(middleframe, image=pausePhoto, command=pause_music)
 pauseBtn.grid(row=0, column=2, padx=10)
 
@@ -233,12 +242,12 @@ pauseBtn.grid(row=0, column=2, padx=10)
 bottomframe = Frame(rightframe)
 bottomframe.pack()
 
-rewindPhoto = PhotoImage(file='C:/Users/DESKTOP/Downloads/Python-Music-Player-master/images/rewind.png')
+rewindPhoto = PhotoImage(file='C:/Users/DESKTOP/Desktop/Mood_Player/GUI/images/rewind.png')
 rewindBtn = ttk.Button(bottomframe, image=rewindPhoto, command=rewind_music)
 rewindBtn.grid(row=0, column=0)
 
-mutePhoto = PhotoImage(file='C:/Users/DESKTOP/Downloads/Python-Music-Player-master/images/mute.png')
-volumePhoto = PhotoImage(file='C:/Users/DESKTOP/Downloads/Python-Music-Player-master/images/volume.png')
+mutePhoto = PhotoImage(file='C:/Users/DESKTOP/Desktop/Mood_Player/GUI/images/mute.png')
+volumePhoto = PhotoImage(file='C:/Users/DESKTOP/Desktop/Mood_Player/GUI/images/volume.png')
 volumeBtn = ttk.Button(bottomframe, image=volumePhoto, command=mute_music)
 volumeBtn.grid(row=0, column=1)
 
@@ -255,3 +264,6 @@ def on_closing():
 
 root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()
+
+
+
